@@ -19,11 +19,18 @@ jobs:
       - name: Debugging
         run: ls -R
 
-      - name: Download CI artifact
+      - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: publish
-          path: ./publish
+          name: publish  # Specify the name of the artifact you uploaded in CI
+          path: ./downloaded-artifact  # Specify the path to download the artifact
+      
+      # Add your deployment steps here
+      # For example, deploying to a server or a cloud service
+      
+      # Example step to list the downloaded artifact
+      - name: List downloaded artifact
+        run: ls ./downloaded-artifact
 
       - name: Deploy to web app
         uses: azure/webapps-deploy@v2
