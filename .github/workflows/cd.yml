@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      -name: Debugging
+      - name: Debugging
         run: ls -R
 
       - name: Download CI artifact
