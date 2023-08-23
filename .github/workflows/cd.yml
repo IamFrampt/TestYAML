@@ -1,0 +1,29 @@
+name: YamlsucksCD
+
+on:
+  workflow_run:
+    workflows: ["YamlsucksCI"]
+    types:
+      - completed
+
+env:
+  APP_NAME: "DucksAreReal"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download CI artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: publish  # Replace with the artifact name used in the CI workflow
+
+      - name: Deploy to web app
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.APP_NAME }}
+          publish-profile: ${{ secrets.AZURE_KEY }}
+          package: ./publish  # This path should be relative to your current working directory
