@@ -32,4 +32,4 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az storage blob upload-batch --destination workflows --source ./publish --connection-string "BlobEndpoint=https://yamlsuckswilly.blob.core.windows.net/;QueueEndpoint=https://yamlsuckswilly.queue.core.windows.net/;FileEndpoint=https://yamlsuckswilly.file.core.windows.net/;TableEndpoint=https://yamlsuckswilly.table.core.windows.net/;SharedAccessSignature=sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2023-08-30T00:00:28Z&st=2023-08-23T16:00:28Z&spr=https&sig=5qiXkpM7%2B57INO%2FVrl80s85CdXdG45pzYhnQXcGsV1c%3D"
+            az storage blob upload-batch --destination workflows/CI --source ./publish --connection-string "${{secrets.AZURE_CS}}"
