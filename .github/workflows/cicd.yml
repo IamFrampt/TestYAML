@@ -19,4 +19,7 @@ jobs:
         run: dotnet restore ./TestYAML/TestYAML.csproj
 
       - name: Build project
-        run: dotnet build ./TestYAML/TestYAML.csproj -c Release --output ./publish
+        run: dotnet build ./TestYAML/TestYAML.csproj -c Release
+
+      - name: Publish project
+       run: dotnet publish ./TestYAML/TestYAML.csproj -c Release --output ./publish
