@@ -27,9 +27,21 @@ jobs:
       - name: Publish project
         run: dotnet publish ./TestYAML/TestYAML.csproj -c Release --output ./publish
 
+      - name: Upload artifact to Azure Storage
+        env:
+          AZURE_STORAGE_ACCOUNT: yamlsuckswilly
+          AZURE_STORAGE_CONTAINER: workflow
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_SA_KEY }}
+        run: |
+          ARTIFACT_PATH=./downloaded-artifact  # Path to the downloaded artifact
 
-      - name: Archive artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: publish  # Specify the name for the artifact
-          path: ./publish  # Specify the path to the artifact
+          # Construct the URL for the storage container
+          STORAGE_CONTAINER_URL="https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_STORAGE_CONTAINER}"
+
+          # Construct the URL for the artifact
+          ARTIFACT_URL="${STORAGE_CONTAINER_URL}/${ARTIFACT_PATH##*/}"
+
+          echo "Uploading artifact to: $ARTIFACT_URL"
+          
+          # Upload the artifact using cURL and the Azure Storage REST API
+          curl -X PUT -T $ARTIFACT_PATH -H "x-ms-blob-type: BlockBlob" "$ARTIFACT_URL?${AZURE_STORAGE_KEY}"
