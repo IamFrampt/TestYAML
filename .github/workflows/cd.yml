@@ -23,6 +23,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: publish
+          path: ./publish
 
       - name: Deploy to web app
         uses: azure/webapps-deploy@v2
