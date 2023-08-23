@@ -14,12 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-        
+      - name: Download artifact from Azure Storage
+        uses: Azure/cli@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            mkdir -p ./downloaded-artifact
+            az storage blob download-batch --destination ./downloaded-artifact --source workflows/CI --connection-string "${{secrets.AZURE_CS}}"
+
       - name: Deploy to web app
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.APP_NAME }}
           publish-profile: ${{ secrets.AZURE_KEY }}
-          package: ./publish  # This path should be relative to your current working directory
+          package: ./downloaded-artifact  # Path to the downloaded artifact
