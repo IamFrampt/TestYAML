@@ -34,8 +34,6 @@ jobs:
           AZURE_STORAGE_KEY: ${{ secrets.AZURE_SA_KEY }}
         run: |
           ARTIFACT_PATH="./publish"
-          CONTENT_LENGTH=$(du -sb "$ARTIFACT_PATH" | awk '{print $1}')  # Get the size of the artifact
-          STORAGE_CONTAINER_URL="https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_STORAGE_CONTAINER}"
-          ARTIFACT_URL="${STORAGE_CONTAINER_URL}/${ARTIFACT_PATH##*/}"
+          ARTIFACT_URL="https://${{AZURE_STORAGE_ACCOUNT}}.blob.core.windows.net/${{AZURE_STORAGE_CONTAINER}}/${{ARTIFACT_PATH}}"  # Replace with your blob URL
           echo "Uploading artifact to: $ARTIFACT_URL"
-          curl -X PUT -T "$ARTIFACT_PATH" -H "x-ms-blob-type: BlockBlob" -H "Content-Length: $CONTENT_LENGTH" "$ARTIFACT_URL?${AZURE_STORAGE_KEY}"
+          curl -X PUT -T "$ARTIFACT_PATH" -H "x-ms-blob-type: BlockBlob" "$ARTIFACT_URL?${{SAS_TOKEN}}"
