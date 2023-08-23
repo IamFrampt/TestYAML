@@ -37,4 +37,5 @@ jobs:
           STORAGE_CONTAINER_URL="https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_STORAGE_CONTAINER}"
           ARTIFACT_URL="${STORAGE_CONTAINER_URL}/${ARTIFACT_PATH##*/}"
           echo "Uploading artifact to: $ARTIFACT_URL"
-          curl -X PUT -T $ARTIFACT_PATH -H "x-ms-blob-type: BlockBlob" "$ARTIFACT_URL?${AZURE_STORAGE_KEY}"
+          CONTENT_LENGTH=$(stat -c%s "$ARTIFACT_PATH")  # Get the size of the artifact
+          curl -X PUT -T $ARTIFACT_PATH -H "x-ms-blob-type: BlockBlob" -H "Content-Length: $CONTENT_LENGTH" "$ARTIFACT_URL?${AZURE_STORAGE_KEY}"
