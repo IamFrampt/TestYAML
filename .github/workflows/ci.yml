@@ -27,7 +27,7 @@ jobs:
       - name: Publish project
         run: dotnet publish ./TestYAML/TestYAML.csproj -c Release --output ./publish
 
-     - name: Upload to Azure Storage
+      - name: Upload to Azure Storage
         uses: Azure/cli@v1
         with:
           azcliversion: 2.30.0
