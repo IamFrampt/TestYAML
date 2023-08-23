@@ -32,4 +32,4 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az storage blob upload-batch --destination workflow --source ./publish --connection-string $AZURE_STORAGE_CONNECTION_STRING
+            az storage blob upload-batch --destination workflow --source ./publish --connection-string ${{AZURE_STORAGE_CONNECTION_STRING}}
