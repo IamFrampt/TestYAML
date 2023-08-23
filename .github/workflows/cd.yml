@@ -16,9 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: List downloaded artifacts
-        run: ls -R
-
       - name: Download CI artifact
         uses: actions/download-artifact@v2
         with:

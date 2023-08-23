@@ -26,3 +26,10 @@ jobs:
 
       - name: Publish project
         run: dotnet publish ./TestYAML/TestYAML.csproj -c Release --output ./publish
+
+
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: publish  # Specify the name for the artifact
+          path: ./publish  # Specify the path to the artifact
