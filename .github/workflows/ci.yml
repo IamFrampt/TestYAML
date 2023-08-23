@@ -33,7 +33,7 @@ jobs:
           AZURE_STORAGE_CONTAINER: workflow
           AZURE_STORAGE_KEY: ${{ secrets.AZURE_SA_KEY }}
         run: |
-          ARTIFACT_PATH="publish"
+          ARTIFACT_PATH="./publish"
           ARTIFACT_URL="https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_STORAGE_CONTAINER}/${ARTIFACT_PATH}"  # Replace with your blob URL
           echo "Uploading artifact to: $ARTIFACT_URL"
           CONTENT_LENGTH=$(stat -c%s "$ARTIFACT_PATH")
